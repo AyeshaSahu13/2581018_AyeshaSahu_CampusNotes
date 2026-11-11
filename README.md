@@ -3,3 +3,4 @@ CampusNotes is a simple project used for understanding, organizing and manading 
 New notes feature added.
 README formatting corrected.
 project documentation updated.
+project structure improved.
