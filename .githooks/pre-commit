@@ -1,0 +1,12 @@
+#!/bin/sh
+
+pattern='TO''DO|FIX''ME'
+
+if git diff --cached --diff-filter=ACM --name-only -z |
+xargs -0 grep -n -I -E "$pattern" 2>/dev/null
+then
+    echo "ERROR: Commit rejected! Remove unfinished task markers."
+    exit 1
+fi
+
+exit 0

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Campus Notes — Study smarter</title>
+<style>
+:root{--bg:#f6f7fb;--card:#fff;--ink:#20243a;--muted:#7b8197;--line:#e9eaf1;--purple:#7157e8;--lav:#eeeaff;--teal:#dff6f0;--orange:#fff0df;--shadow:0 12px 35px #25234a0d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+button,input,textarea,select{font:inherit}button{cursor:pointer;border:0}
+.app{display:flex;min-height:100vh}.sidebar{width:245px;background:#fff;border-right:1px solid var(--line);padding:28px 18px;position:fixed;inset:0 auto 0 0;display:flex;flex-direction:column;z-index:5}
+.brand{display:flex;align-items:center;gap:11px;font-weight:800;font-size:19px;margin:0 8px 38px}.logo{width:37px;height:37px;border-radius:12px;background:var(--purple);color:#fff;display:grid;place-items:center;font-size:20px;box-shadow:0 7px 16px #7157e844}
+.nav-label{font-size:10px;letter-spacing:1.4px;color:#a1a5b5;font-weight:800;margin:0 10px 12px}.nav button{width:100%;background:transparent;color:#737991;padding:12px 13px;border-radius:11px;text-align:left;margin:3px 0;font-size:13px;font-weight:650}.nav button.active,.nav button:hover{background:var(--lav);color:var(--purple)}.nav button span{display:inline-block;width:27px;font-size:16px}.side-bottom{margin-top:auto;background:#f7f5ff;border-radius:15px;padding:15px;font-size:12px;color:#77718e;line-height:1.5}.side-bottom strong{display:block;color:#3d365f;font-size:13px;margin-bottom:5px}
+main{margin-left:245px;width:calc(100% - 245px);padding:30px 4.2% 55px;max-width:1600px}.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:30px}.eyebrow{color:var(--purple);font-weight:800;font-size:11px;letter-spacing:1.4px;text-transform:uppercase}.topbar h1{font-size:27px;margin:5px 0 0;letter-spacing:-.8px}.profile{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:700}.avatar{width:37px;height:37px;border-radius:50%;display:grid;place-items:center;background:#ffe5d1;color:#9b6035;font-weight:800}
+.welcome{background:linear-gradient(115deg,#6d55df,#917cf4);border-radius:22px;padding:27px 30px;color:#fff;display:flex;justify-content:space-between;align-items:center;overflow:hidden;position:relative;box-shadow:0 15px 30px #7157e82b}.welcome:after{content:"✦";position:absolute;font-size:190px;right:12%;top:-75px;color:#ffffff18}.welcome h2{font-size:23px;margin:0 0 8px}.welcome p{margin:0;color:#e9e4ff;font-size:13px}.welcome .date{background:#ffffff20;padding:10px 14px;border-radius:12px;font-size:12px;z-index:1}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin:22px 0 28px}.stat,.panel,.note-card{background:var(--card);border:1px solid var(--line);border-radius:17px;box-shadow:var(--shadow)}.stat{padding:17px 18px}.stat-top{display:flex;justify-content:space-between;color:var(--muted);font-size:12px}.stat-icon{width:31px;height:31px;border-radius:10px;display:grid;place-items:center;background:var(--lav);color:var(--purple)}.stat strong{display:block;font-size:25px;margin-top:10px}.stat small{color:#9a9eb0;font-size:11px}
+.section-head{display:flex;justify-content:space-between;align-items:center;margin:27px 0 14px}.section-head h3{font-size:17px;margin:0}.section-head p{font-size:11px;color:var(--muted);margin:4px 0 0}.primary{background:var(--purple);color:#fff;border-radius:10px;padding:10px 15px;font-size:12px;font-weight:750;box-shadow:0 5px 12px #7157e82b}.primary:hover{background:#5e45d1}.toolbar{display:flex;gap:10px;margin-bottom:15px}.search{flex:1;position:relative}.search input{width:100%;padding:11px 14px 11px 38px;border:1px solid var(--line);border-radius:10px;background:#fff;outline:none;font-size:12px}.search:before{content:"⌕";position:absolute;left:14px;top:5px;font-size:23px;color:#9297a9}.toolbar select{border:1px solid var(--line);border-radius:10px;background:#fff;padding:0 12px;color:#626980;font-size:12px}
+.notes-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.note-card{padding:17px;transition:.2s;cursor:pointer}.note-card:hover{transform:translateY(-3px);box-shadow:0 15px 30px #25234a12}.note-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:13px}.tag{font-size:10px;font-weight:750;padding:6px 9px;border-radius:7px;background:var(--lav);color:var(--purple)}.tag.green{background:var(--teal);color:#23866e}.tag.orange{background:var(--orange);color:#bd762b}.dots{background:none;color:#9ba0b0;font-size:20px}.note-card h4{font-size:15px;margin:0 0 8px}.note-card p{font-size:11px;color:#858ba0;line-height:1.55;margin:0;min-height:52px}.note-foot{display:flex;justify-content:space-between;border-top:1px solid #f0f0f5;margin-top:14px;padding-top:11px;color:#a0a4b3;font-size:10px}
+.lower-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:16px;margin-top:25px}.panel{padding:19px}.panel h3{font-size:15px;margin:0 0 4px}.panel .sub{font-size:11px;color:var(--muted);margin:0 0 17px}.subject-row{display:flex;align-items:center;gap:11px;margin:13px 0}.subject-icon{width:34px;height:34px;border-radius:10px;background:var(--lav);display:grid;place-items:center}.subject-info{flex:1;font-size:12px;font-weight:700}.subject-info small{display:block;color:#a0a4b3;font-weight:400;margin-top:3px}.bar{height:6px;background:#f0eff7;border-radius:9px;width:100px;overflow:hidden}.bar i{display:block;height:100%;background:var(--purple);border-radius:9px}.diagram{width:100%;height:auto;display:block;background:#faf9ff;border-radius:13px;padding:10px}.diagram text{font-family:inherit;font-size:11px;fill:#514b72;font-weight:650}.diagram .node{fill:#fff;stroke:#a99af5;stroke-width:1.5}.diagram .arrow{stroke:#9383e8;stroke-width:1.5;fill:none;marker-end:url(#arr)}
+.empty{grid-column:1/-1;text-align:center;padding:35px;color:var(--muted);background:#fff;border:1px dashed #dcd9ed;border-radius:15px;font-size:13px}
+.modal-backdrop{position:fixed;inset:0;background:#1e1b3580;display:none;align-items:center;justify-content:center;padding:18px;z-index:10}.modal-backdrop.show{display:flex}.modal{background:#fff;width:min(520px,100%);border-radius:19px;padding:23px;box-shadow:0 25px 80px #15132d40}.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:17px}.modal h3{margin:0;font-size:18px}.close{background:#f3f2f8;border-radius:8px;width:30px;height:30px;color:#777}.field{margin:13px 0}.field label{display:block;font-size:11px;font-weight:750;color:#656b80;margin-bottom:7px}.field input,.field textarea,.field select{width:100%;border:1px solid var(--line);border-radius:9px;padding:11px;outline:none;font-size:12px;background:#fff}.field textarea{min-height:115px;resize:vertical}.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}.secondary{background:#f2f1f7;color:#666b7c;border-radius:9px;padding:10px 14px;font-size:12px}
+.toast{position:fixed;bottom:22px;right:22px;background:#25213c;color:#fff;padding:12px 17px;border-radius:10px;font-size:12px;opacity:0;transform:translateY(10px);transition:.25s;z-index:20}.toast.show{opacity:1;transform:translateY(0)}
+@media(max-width:1050px){.notes-grid{grid-template-columns:repeat(2,1fr)}.stats{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:720px){.sidebar{width:65px;padding:20px 9px}.brand{margin:0 4px 30px}.brand span:last-child,.nav-label,.nav button .nav-text,.side-bottom{display:none}.nav button{text-align:center;padding:12px 5px}.nav button span{width:auto}.app main{margin-left:65px;width:calc(100% - 65px);padding:22px 15px}.topbar h1{font-size:21px}.profile .name{display:none}.welcome{padding:22px;display:block}.welcome .date{display:inline-block;margin-top:15px}.lower-grid{grid-template-columns:1fr}.notes-grid{grid-template-columns:1fr}.toolbar{flex-wrap:wrap}.search{min-width:100%}.toolbar select{height:38px;flex:1}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+  <div class="brand"><div class="logo">✎</div><span>Campus Notes</span></div>
+  <div class="nav-label">WORKSPACE</div>
+  <nav class="nav">
+    <button class="active" data-view="dashboard"><span>⌂</span><span class="nav-text">Dashboard</span></button>
+    <button data-view="notes"><span>▤</span><span class="nav-text">My Notes</span></button>
+    <button data-view="diagram"><span>◇</span><span class="nav-text">Study Diagram</span></button>
+  </nav>
+  <div class="side-bottom"><strong>✦ Keep learning</strong>Small notes today, big progress tomorrow. Your study space is ready.</div>
+</aside>
+<main>
+  <header class="topbar"><div><div class="eyebrow">YOUR PERSONAL STUDY SPACE</div><h1 id="pageTitle">Dashboard</h1></div><div class="profile"><div class="avatar">A</div><span class="name">Student</span></div></header>
+  <section class="welcome"><div><h2>Make your learning count ✨</h2><p>Keep your class notes, ideas and diagrams organised in one place.</p></div><div class="date" id="today">Today</div></section>
+  <section class="stats">
+    <div class="stat"><div class="stat-top"><span>Total notes</span><span class="stat-icon">▤</span></div><strong id="totalNotes">4</strong><small>Your knowledge library</small></div>
+    <div class="stat"><div class="stat-top"><span>Subjects</span><span class="stat-icon">▦</span></div><strong id="totalSubjects">4</strong><small>Topics you're learning</small></div>
+    <div class="stat"><div class="stat-top"><span>Diagrams</span><span class="stat-icon">◇</span></div><strong>1</strong><small>Visual study aid</small></div>
+    <div class="stat"><div class="stat-top"><span>Study streak</span><span class="stat-icon">♧</span></div><strong>5 days</strong><small>Keep it going!</small></div>
+  </section>
+  <div class="section-head"><div><h3>Recent notes</h3><p>Pick up where you left off</p></div><button class="primary" id="addBtn">＋ Add new note</button></div>
+  <div class="toolbar"><div class="search"><input id="searchInput" placeholder="Search notes, subjects or keywords..."></div><select id="subjectFilter"><option value="all">All subjects</option><option>Computer Science</option><option>Mathematics</option><option>Web Development</option><option>Electronics</option></select></div>
+  <section class="notes-grid" id="notesGrid"></section>
+  <section class="lower-grid">
+    <div class="panel"><h3>Subject overview</h3><p class="sub">Your notes grouped by subject</p><div id="subjectOverview"></div></div>
+    <div class="panel"><h3>Visual learning map</h3><p class="sub">A simple way to connect your study topics</p>
+      <svg class="diagram" viewBox="0 0 340 190" role="img" aria-label="Study diagram connecting Campus Notes to subjects and revision">
+        <defs><marker id="arr" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6" fill="none" stroke="#9383e8"/></marker></defs>
+        <path class="arrow" d="M170 48 V70 M170 70 H65 V91 M170 70 V91 M170 70 H275 V91 M65 125 V146 M170 125 V146 M275 125 V146"/>
+        <rect class="node" x="113" y="12" width="114" height="36" rx="10"/><text x="170" y="34" text-anchor="middle">Campus Notes</text>
+        <rect class="node" x="15" y="91" width="100" height="34" rx="9"/><text x="65" y="112" text-anchor="middle">CS & Maths</text>
+        <rect class="node" x="120" y="91" width="100" height="34" rx="9"/><text x="170" y="112" text-anchor="middle">Web & Code</text>
+        <rect class="node" x="225" y="91" width="100" height="34" rx="9"/><text x="275" y="112" text-anchor="middle">Electronics</text>
+        <rect class="node" x="15" y="146" width="100" height="29" rx="8"/><text x="65" y="165" text-anchor="middle">Quick revision</text>
+        <rect class="node" x="120" y="146" width="100" height="29" rx="8"/><text x="170" y="165" text-anchor="middle">Practice</text>
+        <rect class="node" x="225" y="146" width="100" height="29" rx="8"/><text x="275" y="165" text-anchor="middle">Visualise</text>
+      </svg>
+    </div>
+  </section>
+</main>
+</div>
+<div class="modal-backdrop" id="modalBackdrop">
+  <form class="modal" id="noteForm">
+    <div class="modal-head"><h3 id="modalTitle">Add a new note</h3><button type="button" class="close" id="closeModal">×</button></div>
+    <div class="field"><label for="noteTitle">NOTE TITLE</label><input id="noteTitle" required placeholder="e.g. Introduction to DBMS"></div>
+    <div class="field"><label for="noteSubject">SUBJECT</label><select id="noteSubject"><option>Computer Science</option><option>Mathematics</option><option>Web Development</option><option>Electronics</option></select></div>
+    <div class="field"><label for="noteContent">YOUR NOTES</label><textarea id="noteContent" required placeholder="Write your key points, definitions or reminders..."></textarea></div>
+    <div class="modal-actions"><button type="button" class="secondary" id="cancelBtn">Cancel</button><button class="primary" type="submit">Save note</button></div>
+  </form>
+</div>
+<div class="toast" id="toast">Note saved!</div>
+<script>
+const starterNotes=[
+ {id:1,title:"Introduction to Data Structures",subject:"Computer Science",content:"Data structures organise and store data efficiently. Key examples include arrays, linked lists, stacks, queues and trees.",date:"Today"},
+ {id:2,title:"Matrix Chain Multiplication",subject:"Mathematics",content:"A dynamic programming technique used to find the most efficient order to multiply a chain of matrices.",date:"Yesterday"},
+ {id:3,title:"JavaScript DOM Basics",subject:"Web Development",content:"The DOM represents a web page as a tree. JavaScript can select, update, create and remove elements.",date:"2 days ago"},
+ {id:4,title:"ESP32 Sensor Notes",subject:"Electronics",content:"ESP32 can read sensor values and control output devices. Always check power requirements and wiring.",date:"3 days ago"}
+];
+let notes=JSON.parse(localStorage.getItem("campusNotes")||"null")||starterNotes;
+let editingId=null;
+const $=id=>document.getElementById(id);
+const escapeHTML=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function save(){localStorage.setItem("campusNotes",JSON.stringify(notes));render()}
+function render(){
+ const q=$("searchInput").value.toLowerCase(), filter=$("subjectFilter").value;
+ const shown=notes.filter(n=>(filter==="all"||n.subject===filter)&&(`${n.title} ${n.subject} ${n.content}`).toLowerCase().includes(q));
+ $("notesGrid").innerHTML=shown.length?shown.map(n=>`<article class="note-card" data-id="${n.id}"><div class="note-meta"><span class="tag ${n.subject==="Electronics"?"orange":n.subject==="Web Development"?"green":""}">${escapeHTML(n.subject)}</span><button class="dots" data-delete="${n.id}" title="Delete note">···</button></div><h4>${escapeHTML(n.title)}</h4><p>${escapeHTML(n.content)}</p><div class="note-foot"><span>▤ Personal note</span><span>${escapeHTML(n.date||"Just now")}</span></div></article>`).join(""):`<div class="empty">No notes found. Try another search or add a new note.</div>`;
+ $("totalNotes").textContent=notes.length;
+ $("totalSubjects").textContent=new Set(notes.map(n=>n.subject)).size;
+ const subjects=["Computer Science","Mathematics","Web Development","Electronics"];
+ $("subjectOverview").innerHTML=subjects.map((s,i)=>{let count=notes.filter(n=>n.subject===s).length;let pct=notes.length?Math.round(count/notes.length*100):0;return `<div class="subject-row"><div class="subject-icon">${["⌘","∑","⌘","ϟ"][i]}</div><div class="subject-info">${s}<small>${count} note${count===1?"":"s"}</small></div><div class="bar"><i style="width:${pct}%"></i></div></div>`}).join("");
+}
+function openModal(note=null){editingId=note?note.id:null;$("modalTitle").textContent=note?"Edit note":"Add a new note";$("noteTitle").value=note?.title||"";$("noteSubject").value=note?.subject||"Computer Science";$("noteContent").value=note?.content||"";$("modalBackdrop").classList.add("show");$("noteTitle").focus()}
+function closeModal(){$("modalBackdrop").classList.remove("show")}
+function toast(msg){$("toast").textContent=msg;$("toast").classList.add("show");setTimeout(()=>$("toast").classList.remove("show"),2200)}
+$("addBtn").onclick=()=>openModal();$("closeModal").onclick=closeModal;$("cancelBtn").onclick=closeModal;
+$("modalBackdrop").onclick=e=>{if(e.target===$("modalBackdrop"))closeModal()};
+$("noteForm").onsubmit=e=>{e.preventDefault();const item={id:editingId||Date.now(),title:$("noteTitle").value.trim(),subject:$("noteSubject").value,content:$("noteContent").value.trim(),date:"Just now"};if(editingId){notes=notes.map(n=>n.id===editingId?item:n)}else notes.unshift(item);save();closeModal();toast(editingId?"Note updated!":"Note added successfully!")};
+$("notesGrid").onclick=e=>{const del=e.target.closest("[data-delete]");if(del){e.stopPropagation();const id=Number(del.dataset.delete);if(confirm("Delete this note?")){notes=notes.filter(n=>n.id!==id);save();toast("Note deleted")};return}const card=e.target.closest("[data-id]");if(card){const note=notes.find(n=>n.id===Number(card.dataset.id));openModal(note)}};
+$("searchInput").oninput=render;$("subjectFilter").onchange=render;
+document.querySelectorAll(".nav button").forEach(btn=>btn.onclick=()=>{document.querySelectorAll(".nav button").forEach(b=>b.classList.remove("active"));btn.classList.add("active");const view=btn.dataset.view;$("pageTitle").textContent=view==="dashboard"?"Dashboard":view==="notes"?"My Notes":"Study Diagram";if(view==="notes")$("searchInput").focus();if(view==="diagram")document.querySelector(".lower-grid").scrollIntoView({behavior:"smooth"})});
+$("today").textContent=new Date().toLocaleDateString("en-IN",{weekday:"short",day:"numeric",month:"short",year:"numeric"});
+render();
+</script>
+</body>
+</html>
